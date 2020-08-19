@@ -1,0 +1,126 @@
+*HEADING
+ABAQUS job created on 10-Jan-06 at 21:57:08
+Title: Element test 
+Geometry:
+side = 0.1 m
+width = 0.0254 m
+**
+*NODE
+1,0.00 ,0.00
+2, 0.1 ,0.0
+3, 0.1 ,0.0
+4, 0.00 ,0.00
+5, 0.0 ,0.1
+6, 0.1 , 0.1
+
+**
+**
+*ELEMENT, TYPE=CPS4 , ELSET=Q4
+       1,       4,       3,       6,       5
+*USER ELEMENT, TYPE=U1, NODE=4, COORDINATES=2, PROPERTIES=9, VARIABLES=8
+1, 2
+*ELEMENT, TYPE=U1, ELSET=ONE
+    2,    1,    2,    3,    4
+**
+**
+*SOLID SECTION, ELSET=Q4, MATERIAL=con
+25.4
+*Nset, nset=Set-1
+ 1,
+*Nset, nset=Set-2
+ 2,
+ *Nset, nset=Set-4
+ 4,
+*Nset, nset=Set-3
+ 5, 6
+*End Assembly
+*MATERIAL, NAME=con
+*ELASTIC
+32.0e3, 0.2
+**
+*UEL PROPERTY, ELSET=ONE
+100e-6, 200e-6, 4, 3, 5, 1.6, 0.005, 0.005,
+0.0254
+******************************************************
+**STEP, NLGEOM, INC=400
+**STATIC, RIKS
+**0.00001, 1.0, 0.0000000001, 0.1
+*Step, name=Step-1, nlgeom=YES, inc=10000
+*Static
+0.01, 1., 1e-10, 0.1
+*BOUNDARY
+Set-1, 1, 1
+Set-1, 2, 2
+Set-1, 6, 6
+** Name: BC-2 Type: Displacement/Rotation
+*Boundary
+Set-2, 2, 2
+** Name: BC-3 Type: Displacement/Rotation
+*Boundary
+Set-3, 2, 2, 0.025e-3
+** 
+** OUTPUT REQUESTS
+** 
+*Restart, write, frequency=0
+** 
+** FIELD OUTPUT: F-Output-1
+** 
+*Output, field, variable=PRESELECT
+** 
+** HISTORY OUTPUT: H-Output-1
+** 
+*Output, history, variable=PRESELECT
+*NODE PRINT,NSET=Set-4
+U2
+*EL PRINT, POSITION=CENTROIDAL
+S22
+*END STEP
+************************************************
+** notes 
+*Step, name=Step-2, nlgeom=YES, inc=10000
+*Static
+0.01, 1., 1e-10, 0.1
+** Name: BC-3 Type: Displacement/Rotation
+*Boundary
+Set-3, 2, 2, 0
+** 
+** OUTPUT REQUESTS
+** 
+*Restart, write, frequency=0
+** 
+** FIELD OUTPUT: F-Output-1
+** 
+*Output, field, variable=PRESELECT
+** 
+** HISTORY OUTPUT: H-Output-1
+** 
+*Output, history, variable=PRESELECT
+*NODE PRINT,NSET=Set-4
+U2
+*EL PRINT, POSITION=CENTROIDAL
+S22
+*END STEP
+******************************************************
+*Step, name=Step-3, nlgeom=YES, inc=10000
+*Static
+0.005, 1., 1e-10, 0.05
+** Name: BC-3 Type: Displacement/Rotation
+*Boundary
+Set-3, 2, 2, 0.15e-3
+** 
+** OUTPUT REQUESTS
+** 
+*Restart, write, frequency=0
+** 
+** FIELD OUTPUT: F-Output-1
+** 
+*Output, field, variable=PRESELECT
+** 
+** HISTORY OUTPUT: H-Output-1
+** 
+*Output, history, variable=PRESELECT
+*NODE PRINT,NSET=Set-4
+U2
+*EL PRINT, POSITION=CENTROIDAL
+S22
+*END STEP
