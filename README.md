@@ -1,5 +1,5 @@
 # CrackGrowth
-Cohesive elements in Abaqus UMAT
+Cohesive elements in Abaqus UEL (user defined element) for crack growth 
 
 Based on 
 
